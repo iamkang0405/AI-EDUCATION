@@ -88,5 +88,8 @@
   <script>
     document.querySelector('.dodge-help').textContent='↑ ↓ ← → 또는 W/A/S/D로 이동 · 모바일은 화면을 터치해 이동';const moveDodgePlayer=()=>{if(!dodgeRunning)return;dodgePlayer.y+=((dodgeKeys.ArrowDown||dodgeKeys.s?1:0)-(dodgeKeys.ArrowUp||dodgeKeys.w?1:0))*5;dodgePlayer.y=Math.max(75,Math.min(515,dodgePlayer.y))};setInterval(moveDodgePlayer,16);dodgeCanvas.addEventListener('pointermove',e=>{if(dodgeRunning){const r=dodgeCanvas.getBoundingClientRect();dodgePlayer.y=Math.max(75,Math.min(515,(e.clientY-r.top)*(560/r.height)-20))}});
   </script>
+  <script>
+    const normalizeDodgeBlocks=()=>{if(!dodgeRunning)return;for(let i=0;i<dodgeBlocks.length;i++){const b=dodgeBlocks[i];b.w=32;b.h=32;b.x=Math.max(4,Math.min(394,b.x));let attempts=0,overlap=true;while(overlap&&attempts++<12){overlap=false;for(let j=0;j<i;j++){const other=dodgeBlocks[j];const touching=b.x<other.x+32&&b.x+32>other.x&&b.y<other.y+32&&b.y+32>other.y;if(touching){overlap=true;const right=other.x+40,left=other.x-40;b.x=right<=394?right:left<4?4:left;break}}}b.x=Math.max(4,Math.min(394,b.x))}};setInterval(normalizeDodgeBlocks,16);
+  </script>
 </body>
 </html>
