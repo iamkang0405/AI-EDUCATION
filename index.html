@@ -21,6 +21,7 @@
     @media(max-width:700px){.sidebar{display:flex;position:fixed;z-index:8;inset:0 auto 0 0;width:260px;transform:translateX(-100%);transition:transform .2s ease;box-shadow:4px 0 18px #0002}.sidebar.open{transform:translateX(0)}.sidebar-toggle{display:inline-block;margin-top:27px}.sidebar-close{display:block}.composer-wrap{left:0}.topbar{height:calc(58px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0}.messages{padding-left:14px;padding-right:14px}.welcome h1{font-size:25px}}
     .login-card form.pin-form{display:flex;justify-content:center;gap:10px}.login-card .pin-digit{flex:0 0 58px;width:58px;height:58px;border:1px solid #ccc;border-radius:10px;text-align:center;font-size:25px;outline:none;padding:0}.login-card .pin-digit:focus{border-color:var(--green);box-shadow:0 0 0 3px #10a37f1c}.login-card form.pin-form button{display:none}
     .legal-note{margin-top:18px;color:#888;font-size:11px;line-height:1.6}.composer-legal{font-size:11px;color:#999;text-align:center;margin-top:5px}
+    .follow-btn{display:none;position:absolute;bottom:112px;left:50%;transform:translateX(-50%);z-index:4;border:1px solid #ccc;background:#fff;border-radius:18px;padding:8px 14px;color:#555;box-shadow:0 2px 8px #0002;cursor:pointer;font-size:12px}.follow-btn.visible{display:block}
   </style>
 </head>
 <body>
@@ -58,6 +59,9 @@
   </script>
   <script>
     const loginCard=document.querySelector('.login-card');const notice=document.createElement('div');notice.className='legal-note';notice.innerHTML='본 사이트는 교육 목적의 비공식 AI 서비스이며 OpenAI 또는 포스코퓨처엠의 공식 서비스가 아닙니다.<br>개인정보·사내 기밀자료·민감한 문서는 입력하거나 업로드하지 마세요.';loginCard.appendChild(notice);const composerLegal=document.createElement('div');composerLegal.className='composer-legal';composerLegal.textContent='입력 내용은 AI 분석을 위해 외부 API로 전송될 수 있습니다. AI 답변은 참고용이며 중요한 판단에는 전문가 검토가 필요합니다.';document.querySelector('.disclaimer').after(composerLegal);
+  </script>
+  <script>
+    const followButton=document.createElement('button');followButton.className='follow-btn';followButton.id='followBtn';followButton.textContent='↓ 최신 답변 따라가기';document.querySelector('.composer-wrap').prepend(followButton);messages.addEventListener('wheel',e=>{if(e.deltaY<0){userScrolledUp=true;followButton.classList.add('visible')}});followButton.onclick=()=>{userScrolledUp=false;messages.scrollTop=messages.scrollHeight;followButton.classList.remove('visible')};
   </script>
 </body>
 </html>
