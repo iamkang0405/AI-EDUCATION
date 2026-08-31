@@ -70,5 +70,8 @@
   <script>
     const baseFormatMessage=formatMessage;formatMessage=function(value){const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'),inline=s=>esc(s.trim()).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');return value.split(/\n\n+/).map(block=>{const lines=block.trim().split('\n');if(lines.length>=2&&/^\s*\|?.+\|.+\|?\s*$/.test(lines[0])&&/^\s*\|?\s*:?-{3,}:?\s*\|/.test(lines[1])){const rows=lines.filter((_,i)=>i!==1).map(line=>line.trim().replace(/^\||\|$/g,'').split('|').map(inline));return '<div class="table-wrap"><table><thead><tr>'+rows[0].map(c=>'<th>'+c+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(1).map(row=>'<tr>'+row.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'}return baseFormatMessage(block)}).join('')};
   </script>
+  <script>
+    const resetFollowOnSend=()=>{userScrolledUp=false;followButton.classList.remove('visible')};composer.addEventListener('submit',resetFollowOnSend,true);prompt.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey)resetFollowOnSend()},true);
+  </script>
 </body>
 </html>
