@@ -77,5 +77,8 @@
   <script>
     const resetFollowOnSend=()=>{userScrolledUp=false;followButton.classList.remove('visible')};composer.addEventListener('submit',resetFollowOnSend,true);prompt.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey)resetFollowOnSend()},true);
   </script>
+  <script>
+    const shibaSprite=new Image(),shibaFrames=[];shibaSprite.src='assets/shiba-run-spritesheet.png';shibaSprite.onload=()=>{for(let i=0;i<4;i++){const c=document.createElement('canvas'),x=c.getContext('2d');c.width=210;c.height=430;x.drawImage(shibaSprite,i*256+40,270,210,430,0,0,210,430);const p=x.getImageData(0,0,c.width,c.height);for(let n=0;n<p.data.length;n+=4)if(p.data[n]>245&&p.data[n+1]>245&&p.data[n+2]>245)p.data[n+3]=0;x.putImageData(p,0,0);shibaFrames.push(c)}};const originalFillText=dodgeCtx.fillText.bind(dodgeCtx),originalFillRect=dodgeCtx.fillRect.bind(dodgeCtx),originalStrokeRect=dodgeCtx.strokeRect.bind(dodgeCtx);dodgeCtx.fillRect=function(x,y,w,h){if(w===40&&h===40&&this.fillStyle==='#fff8f5')return originalFillRect(0,0,0,0);return originalFillRect(x,y,w,h)};dodgeCtx.strokeRect=function(x,y,w,h){if(w===40&&h===40)return;return originalStrokeRect(x,y,w,h)};dodgeCtx.fillText=function(text,x,y){if(text==='🐕'&&shibaFrames.length){const frame=shibaFrames[Math.floor(dodgeScore*12)%4];this.drawImage(frame,x-8,y-62,56,86);return}return originalFillText(text,x,y)};
+  </script>
 </body>
 </html>
