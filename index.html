@@ -111,5 +111,6 @@
   <script>
   (()=>{const originalDraw=CanvasRenderingContext2D.prototype.drawImage,sourcePath='shiba-adventure-spritesheet.png';CanvasRenderingContext2D.prototype.drawImage=function(image,...args){if(image instanceof HTMLImageElement&&image.src.includes(sourcePath)&&this.canvas.id==='adventureCanvas'){const sx=args.length>4?args[0]:0,sy=args.length>4?args[1]:0,sw=args.length>4?args[2]:image.naturalWidth,sh=args.length>4?args[3]:image.naturalHeight,dx=args.length>4?args[4]:args[0],dy=args.length>4?args[5]:args[1],dw=args.length>4?args[6]:args[2],dh=args.length>4?args[7]:args[3],c=document.createElement('canvas'),q=c.getContext('2d');c.width=256;c.height=200;originalDraw.call(q,image,sx,sy,sw,sh,0,0,256,200);const p=q.getImageData(0,0,256,200),d=p.data,w=256,h=200,seen=new Uint8Array(w*h),white=i=>d[i]>238&&d[i+1]>238&&d[i+2]>238;for(let n=0;n<w*h;n++){if(seen[n]||!white(n*4))continue;const part=[],stack=[n];while(stack.length){const k=stack.pop();if(k<0||k>=w*h||seen[k]||!white(k*4))continue;seen[k]=1;part.push(k);const x=k%w;stack.push(k-1,k+1,k-w,k+w)}if(part.length>200)part.forEach(k=>d[k*4+3]=0)}q.putImageData(p,0,0);return originalDraw.call(this,c,0,0,256,200,dx,dy,dw,dh)}return originalDraw.call(this,image,...args)};})();
   </script>
+  <script src="adventure.js"></script>
   </body>
 </html>
