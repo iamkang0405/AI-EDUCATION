@@ -131,3 +131,6 @@
 <script>
 (()=>{const b=document.querySelector('#followBtn'),m=document.querySelector('#messages');if(!b)return;b.addEventListener('click',()=>{window._followMode=true;userScrolledUp=false;m.scrollTo({top:m.scrollHeight,behavior:'auto'});b.classList.remove('visible')});['wheel','touchmove'].forEach(e=>m.addEventListener(e,()=>{window._followMode=false;userScrolledUp=true;b.classList.add('visible')},{passive:true}))})();
 </script>
+<script>
+(()=>{const m=document.querySelector('#messages'),p=document.querySelector('#prompt'),b=document.querySelector('#followBtn');p.addEventListener('input',()=>{userScrolledUp=false;window._followMode=true;b?.classList.remove('visible')});new MutationObserver(()=>{if(!userScrolledUp||window._followMode)m.scrollTop=m.scrollHeight}).observe(m,{childList:true,subtree:true,characterData:true})})();
+</script>
